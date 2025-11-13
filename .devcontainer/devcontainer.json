@@ -1,12 +1,11 @@
 {
   "name": "Manual Android Setup",
-  
+
+  // 我们使用一个包含 'sudo' 和 'apt' (包管理器) 的基础镜像
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
 
-  // 【关键修改】: 我们 *删除* 了 "remoteEnv" 部分。
-  // "remoteEnv" 会立即设置变量，导致了我们的问题。
-
-  // 我们只使用 "postCreateCommand"
-  // 这个脚本现在 *全权负责* 安装 和 设置环境变量
+  // 【关键】: 我们不再使用 "features" 或 "remoteEnv"。
+  // 我们只使用 "postCreateCommand"，它会在容器创建*之后*运行我们的脚本。
+  // 这将全权负责安装和设置环境变量。
   "postCreateCommand": "bash .devcontainer/setup.sh"
 }
