@@ -1,0 +1,25 @@
+{
+  "name": "Android with Java 17",
+  
+  // 我们从一个通用的 Ubuntu 镜像开始
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+
+  // "features" 是关键：我们在这里“点菜”，告诉 Codespaces 我们需要什么
+  "features": {
+    
+    // 1. 添加 Java (JDK) 17
+    // 这将自动安装 Java 17 并设置好 JAVA_HOME
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "17"
+    },
+    
+    // 2. 添加 Android 命令行工具 (SDK)
+    // 这将自动安装 SDK 并设置好 ANDROID_HOME
+    "ghcr.io/devcontainers/features/android-cli:1": {
+      "sdkVersion": "34"
+    }
+  },
+
+  // (可选，但推荐) 确保 gradlew 脚本有执行权限
+  "postCreateCommand": "chmod +x ./gradlew"
+}
