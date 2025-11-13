@@ -1,18 +1,12 @@
 {
   "name": "Manual Android Setup",
   
-  // 我们使用一个包含 'sudo' 和 'apt' 的基础镜像
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
 
-  // 【关键】: "features" 不见了
-  // 我们改用 "postCreateCommand" 在容器创建后运行我们的脚本
-  // 注意：我们以 root 身份运行，因为基础镜像是 root
-  "postCreateCommand": "bash .devcontainer/setup.sh",
+  // 【关键修改】: 我们 *删除* 了 "remoteEnv" 部分。
+  // "remoteEnv" 会立即设置变量，导致了我们的问题。
 
-  // 我们仍然可以预先设置环境变量，
-  // 即使它们是在 postCreateCommand 中安装的
-  "remoteEnv": {
-    "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64",
-    "ANDROID_HOME": "/usr/local/android-sdk"
-  }
+  // 我们只使用 "postCreateCommand"
+  // 这个脚本现在 *全权负责* 安装 和 设置环境变量
+  "postCreateCommand": "bash .devcontainer/setup.sh"
 }
