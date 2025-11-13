@@ -1,25 +1,18 @@
 {
-  "name": "Android with Java 17",
+  "name": "Manual Android Setup",
   
-  // 我们从一个通用的 Ubuntu 镜像开始
+  // 我们使用一个包含 'sudo' 和 'apt' 的基础镜像
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
 
-  // "features" 是关键：我们在这里“点菜”，告诉 Codespaces 我们需要什么
-  "features": {
-    
-    // 1. 添加 Java (JDK) 17
-    // 这将自动安装 Java 17 并设置好 JAVA_HOME
-    "ghcr.io/devcontainers/features/java:1": {
-      "version": "17"
-    },
-    
-    // 2. 添加 Android 命令行工具 (SDK)
-    // 这将自动安装 SDK 并设置好 ANDROID_HOME
-    "ghcr.io/devcontainers/features/android-cli:1": {
-      "sdkVersion": "34"
-    }
-  },
+  // 【关键】: "features" 不见了
+  // 我们改用 "postCreateCommand" 在容器创建后运行我们的脚本
+  // 注意：我们以 root 身份运行，因为基础镜像是 root
+  "postCreateCommand": "bash .devcontainer/setup.sh",
 
-  // (可选，但推荐) 确保 gradlew 脚本有执行权限
-  "postCreateCommand": "chmod +x ./gradlew"
+  // 我们仍然可以预先设置环境变量，
+  // 即使它们是在 postCreateCommand 中安装的
+  "remoteEnv": {
+    "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64",
+    "ANDROID_HOME": "/usr/local/android-sdk"
+  }
 }
